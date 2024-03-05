@@ -6,20 +6,32 @@ import java.util.*;
  * @date 2024/3/5 18:50
  */
 class Solution {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List<String>> hashtable = new HashMap<>();
-        for (int i = 0; i < strs.length; i++) {
-            List<String> result = hashtable.getOrDefault(sortString(strs[i]), new ArrayList<>());
-            result.add(strs[i]);
-            hashtable.put(sortString(strs[i]), result);
+    public int longestConsecutive(int[] nums) {
+        // 对数组进行排序
+        if (nums.length == 0) {
+            return 0;
+        }
+        Arrays.sort(nums);
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        int cnt = 0;
+        hashMap.put(cnt, 1);
+        for (int i = 1; i < nums.length; ++i) {
+            if(nums[i] == nums[i-1]){
+
+            }
+            if (nums[i] - nums[i - 1] == 1){
+                int re = hashMap.getOrDefault(cnt, 1);
+                re += 1;
+                hashMap.put(cnt, re);
+            }else {
+                cnt += 1;
+                hashMap.put(cnt, 1);
+            }
 
         }
-        return hashtable.values().stream().toList();
-    }
-    public static String sortString(String str) {
-        char[] charArray = str.toCharArray();
-        Arrays.sort(charArray);
-        return new String(charArray);
+        Object[] result = hashMap.values().toArray();
+        Arrays.sort(result);
+        return (int) result[result.length - 1];
     }
 }
 
